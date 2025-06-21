@@ -1,9 +1,14 @@
 services:
-  postgres:
-    image: postgres:17
+  database:
+    image: postgres:latest
+    restart: unless-stopped
+    volumes:
+      - postgres:/var/lib/postgresql/data
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      POSTGRES_PASSWORD: test
+      POSTGRES_USER: test
+      POSTGRES_DB: test
     ports:
-      - '5432'
+      - 5432:5432
+volumes:
+  postgres:

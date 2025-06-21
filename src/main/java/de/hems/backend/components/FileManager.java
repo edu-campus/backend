@@ -13,7 +13,8 @@ public class FileManager {
     @Autowired
     public FileManager(ConfigurationManager configurationManager) {
         this.configurationManager = configurationManager;
-        storageType = FileStorageType.valueOf(configurationManager.getConfig().getString("storage.type"));
+        if (configurationManager.getConfig().node("first-time").getBoolean()) return;
+        storageType = FileStorageType.valueOf(configurationManager.getConfig().node("settings", "storageType").getString());
     }
 
     public void saveFile() {

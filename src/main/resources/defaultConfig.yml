@@ -1,1 +1,20 @@
 first-time: true
+secrets:
+  smtp:
+    host: "smtp.gmail.com"
+    port: 587
+    username: "yourmail@mail.com"
+    password: "XXXX XXXX XXXX XXXX"
+    properties:
+      mail:
+        transport:
+          protocol: "smtp"
+        smtp:
+          auth: "true"
+          starttls:
+            enable: "true"
+      debug: "false"
+settings:
+  storageType: "DATABASE"
+  mail:
+    own: true

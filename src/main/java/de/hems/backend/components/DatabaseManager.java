@@ -7,10 +7,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DatabaseManager {
-    private final EntityManagerFactory entityManagerFactory;
+
+    private EntityManagerFactory entityManagerFactory;
+    private final ConfigurationManager configurationManager;
 
     @Autowired
-    public DatabaseManager(EntityManagerFactory entityManagerFactory) {
+    public DatabaseManager(EntityManagerFactory entityManagerFactory, ConfigurationManager configurationManager) {
+        this.configurationManager = configurationManager;
+        if (configurationManager.getConfig().node("first-time").getBoolean()) return;
         this.entityManagerFactory = entityManagerFactory;
     }
 
