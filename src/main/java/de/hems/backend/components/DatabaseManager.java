@@ -21,4 +21,6 @@ public class DatabaseManager {
     public SessionFactory getSessionFactory() {
         return entityManagerFactory.unwrap(SessionFactory.class);
     }
+
+
 }

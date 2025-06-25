@@ -1,5 +1,7 @@
 package de.hems.backend.components;
 
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -38,10 +40,17 @@ public class MailManager {
         }
     }
     
-    public void sendMail(String to, String subject, String text) {
+    public boolean sendMail(String to, String subject, String text) throws MessagingException {
         if (!configurationManager.getConfig().node("settings", "mail", "own").getBoolean()) {
-
+            if (mailSender == null) return false;
+            MimeMessage m = mailSender.createMimeMessage();
+            m.setSubject(subject);
+            m.setText(text);
+            m.setRecipients(MimeMessage.RecipientType.TO, to);
+            mailSender.send(m);
+            return true;
         }
-
+        //TODO:
+        return false;
     }
 }

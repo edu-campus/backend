@@ -1,5 +1,6 @@
 package de.hems.backend;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
