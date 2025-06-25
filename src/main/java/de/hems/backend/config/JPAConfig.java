@@ -1,5 +1,7 @@
 package de.hems.backend.config;
 
+import de.hems.backend.components.ConfigurationManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +16,13 @@ import java.util.Map;
 
 @Configuration
 public class JPAConfig {
+
+    private final ConfigurationManager manager;
+
+    @Autowired
+    public JPAConfig(ConfigurationManager manager) {
+        this.manager = manager;//TODO: add ability for users to change db type
+    }
     // Hardcoded database connection variables
     private final String dbUrl = "jdbc:postgresql://localhost:5432/test";
     private final String dbUsername = "test";

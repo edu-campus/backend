@@ -33,7 +33,7 @@ public class MailManager {
             props.put("mail.transport.protocol", config.node("secrets", "smtp", "properties", "mail", "transport", "protocol").getString());
             props.put("mail.smtp.auth", config.node("secrets", "smtp", "properties", "mail", "smtp", "auth").getString());
             props.put("mail.smtp.starttls.enable", config.node("secrets", "smtp", "properties", "mail", "smtp", "starttls", "enable").getString());
-            props.put("mail.debug", config.node("secrets", "smtp", "properties", "mail", "debug").getString());
+            props.put("mail.debug", "true");//config.node("secrets", "smtp", "properties", "mail", "debug").getString());
             this.mailSender = mailSender;
         } else {
             this.mailSender = null;

@@ -2,6 +2,7 @@ package de.hems.backend.components;
 
 import de.hems.Plugin;
 import de.hems.backend.InternalPlugin.PluginMain;
+import de.hems.events.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,9 @@ public class PluginManager {
     @Autowired
     public PluginManager(ConfigurationManager configurationManager) throws ClassNotFoundException {
         this.configurationManager = configurationManager;
+        plugins = new ArrayList<>();
+        plugins.add(new PluginMain());
+        System.out.println("plugins");
         if (configurationManager.getConfig().node("first-time").getBoolean()) return;
         /*
         List<JarFile> jarFiles = new ArrayList<>();
@@ -28,10 +32,7 @@ public class PluginManager {
             Class<?> clazz = Class.forName(mainClass, true, new URLClassLoader(jarFile., this.getClass().getClassLoader()));
         }
          */
-        plugins = new ArrayList<>();
-        plugins.add(new PluginMain());
         plugins.forEach(Plugin::onLoad);
-        System.out.println("plugins");
     }
 
     public void enablePlugins() {
@@ -40,5 +41,9 @@ public class PluginManager {
 
     public void disablePlugins() {
         plugins.forEach(Plugin::onDisable);
+    }
+
+    public void callEvent(Event event) {
+        plugins.forEach(plugin -> plugin.getEventManager().callEvent(event));
     }
 }

@@ -1,13 +1,14 @@
 package de.hems.backend.InternalPlugin;
 
 import de.hems.Plugin;
+import de.hems.backend.InternalPlugin.events.UserCreateHandler;
 
-public class PluginMain implements Plugin {
+public class PluginMain extends Plugin {
 
 
     @Override
     public void onLoad() {
-
+        getEventManager().registerEvents(new UserCreateHandler());
     }
 
     @Override
@@ -18,10 +19,5 @@ public class PluginMain implements Plugin {
     @Override
     public void onDisable() {
 
-    }
-
-    @Override
-    public String getName() {
-        return "CORE-Features";
     }
 }
