@@ -2,6 +2,7 @@ package de.hems.backend.components;
 
 import de.hems.backend.types.entitys.FileStorageEntity;
 import de.hems.backend.types.enums.FileStorageType;
+import de.hems.utils.file.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,26 +25,24 @@ public class FileManager {
         storageType = FileStorageType.valueOf(configurationManager.getConfig().node("settings", "storageType").getString());
     }
 
-    public UUID saveFile(byte[] file, String type, String name) {
+    public UploadedFile saveFile(byte[] file, String type, String name) {
         switch (storageType) {
             case DATABASE -> {
                 FileStorageEntity fileStorageEntity = new FileStorageEntity(file, type, name);
                 databaseManager.getSessionFactory().inTransaction(session -> {
                     session.persist(fileStorageEntity);
                 });
-                return fileStorageEntity.getId();
+                return new UploadedFile(fileStorageEntity.getId(), configurationManager.getConfig().node("url").getString());
             }
         }
         throw new IllegalStateException("Unexpected value: " + storageType);
     }
 
-    public UUID saveFile(File f) throws IOException {
+    public UploadedFile saveFile(File f) throws IOException {
         if (!f.exists()) throw new FileNotFoundException();
         byte[] bytes = Files.readAllBytes(f.toPath());
         return saveFile(bytes, f.getName().split("\\.")[1], f.getName());
     }
-
-
 
     public void loadFile() {
     }

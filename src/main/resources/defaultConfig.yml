@@ -1,4 +1,5 @@
 first-time: true
+url: "http://localhost:8080"
 secrets:
   smtp:
     host: "smtp.gmail.com"

@@ -31,7 +31,8 @@ public class Test {
 
     @GetMapping("/test")
     public String test() {
-        pluginManager.callEvent(new UserCreateEvent(UUID.randomUUID(), "Test", "<EMAIL>"));
-        return "Test";
+        UserCreateEvent test = new UserCreateEvent(UUID.randomUUID(), "Test", "<EMAIL>");
+        pluginManager.callEvent(test);
+        return String.valueOf(test.isCancelled());
     }
 }
